@@ -19,7 +19,7 @@ import toastr from 'toastr';
 export class CategoryFormComponent implements OnInit, AfterContentChecked {
   
   currentAction: string;
-  categoryFrom: FormGroup;
+  categoryForm: FormGroup;
   pageTitle: string;
   serverErrorMessages: string[] = null;
   submittingForm: boolean = false;
@@ -36,14 +36,54 @@ export class CategoryFormComponent implements OnInit, AfterContentChecked {
 
   ngOnInit() {
     this.setCurrentAction();
-    this.buildCategoryForm();
+    this.builderCategoryForm();
     this.loadCategory();
   }
 
   ngAfterContentChecked(): void {
-    throw new Error("Method not implemented.");
+    this.setPageTitle();
   }
 
-  // private methods
+  
 
+  // private methods
+  private setCurrentAction(){
+    if(this.route.snapshot.url[0].path == "new"){
+      this.currentAction = 'new';
+    }else{
+      this.currentAction = 'edit';
+    }
+  }
+
+  private builderCategoryForm(){
+    this.categoryForm = this.formBuilder.group({
+      id: [null],
+      name: [null, [Validators.required, Validators.minLength(2)]],
+      description: [null]
+    });
+  }
+
+  private loadCategory(){
+    if(this.currentAction == 'edit'){
+      this.route.paramMap.pipe(
+        switchMap(params => this.categoryService.getById(+params.get("id")))
+      )
+      .subscribe(
+        (category) => {
+          this.category = category;
+          this.categoryForm.patchValue(category)
+        },
+        (error) => alert('Ocorreu um erro')
+      )
+    }
+  }
+
+  setPageTitle() {
+    if(this.currentAction == 'new'){
+      this.pageTitle = 'Cadastro de Nova Categoria'
+    }else{
+      const categoryName = this.category.name || ""
+      this.pageTitle = "Editando Categoria: " + categoryName;
+    }
+  }
 }
