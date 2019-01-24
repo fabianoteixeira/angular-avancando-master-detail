@@ -1,5 +1,4 @@
 import { CategoryService } from './../../categories/shared/category.service';
-import { element } from 'protractor';
 
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
