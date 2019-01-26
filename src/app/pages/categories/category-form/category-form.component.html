@@ -1,3 +1,7 @@
+<app-bread-crumb
+[items]="[{text: 'Categorias', link: '/categories'}, {text: pageTitle}]"
+></app-bread-crumb>
+
 <nav mb-5>
   <ol class="breadcrumb">
     <li class="breadcrumb-item"> <a routerLink="/">Home</a> </li>
@@ -18,7 +22,7 @@
   </div>
 </div>
 
-<form [formGroup] = "categoryForm" (submit)= "submitform()">
+<form [formGroup] = "resourceForm" (submit)= "submitform()">
   <div class="card">
     <div class="car-header">
       Informações sobre a Categoria
@@ -29,9 +33,9 @@
           <label for="name">Nome</label>
           <input type="text" class="form-control" id="name" formControlName= "name">
 
-          <div class="text-danger" *ngIf="categoryForm.get('name').invalid && categoryForm.get('name').touched">
-            <div *ngIf="categoryForm.get('name').errors.required"> dado obrigatório</div>
-            <div *ngIf="categoryForm.get('name').errors.minlength"> deve ter no minimo 2 caracteres</div>
+          <div class="text-danger" *ngIf="resourceForm.get('name').invalid && resourceForm.get('name').touched">
+            <div *ngIf="resourceForm.get('name').errors.required"> dado obrigatório</div>
+            <div *ngIf="resourceForm.get('name').errors.minlength"> deve ter no minimo 2 caracteres</div>
           </div>
 
         </div>
@@ -49,7 +53,7 @@
              </li>
            </ul>
          </div>
-         <button [disabled] = 'submittingForm || categoryForm.invalid' type="submit" class="btn btn-primary btn-lg float-right mt-3">
+         <button [disabled] = 'submittingForm || resourceForm.invalid' type="submit" class="btn btn-primary btn-lg float-right mt-3">
           Salvar
          </button>
       </div>

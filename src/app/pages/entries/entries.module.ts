@@ -17,6 +17,9 @@ import { SharedModule } from 'src/app/shared/shared.module';
     EntriesRoutingModule,
     CalendarModule,
     IMaskModule
+  ],
+  exports: [
+    
   ]
 })
 export class EntriesModule { }
