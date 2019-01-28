@@ -2,25 +2,12 @@
 [items]="[{text: 'Categorias', link: '/categories'}, {text: pageTitle}]"
 ></app-bread-crumb>
 
-<nav mb-5>
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"> <a routerLink="/">Home</a> </li>
-    <li class="breadcrumb-item"> <a routerLink="/categories"></a> Categorias</li>
-    <li class="breadcrumb-item active"> <a routerLink="/categories"></a> {{pageTitle}}</li>
-  </ol>
-</nav>
-
-<div class="row mb-4">
-  <div class="col-md">
-    <h1 class="h2 border-left pl-2">
-      {{pageTitle}}
-    </h1>
-  </div>
-  <div class="col-md">
-    <a routerLink="/categories" class="btn btn-success float-right">
-      << Voltar</a>
-  </div>
-</div>
+<app-page-header
+[page-title] = "pageTitle"
+button-class = "btn-light"
+button-text = "<< Voltar"
+button-link = "/categories"
+></app-page-header>
 
 <form [formGroup] = "resourceForm" (submit)= "submitform()">
   <div class="card">
@@ -45,18 +32,22 @@
           <input type="text" class="form-control" id ="description" formControlName = "description">
          </div>
 
-         <div class="alert alert-danger mt-4" *ngIf="serverErrorMessages">
+         <!-- <div class="alert alert-danger mt-4" *ngIf="serverErrorMessages">
            <strong>Erro no servidor:</strong>
            <ul>
              <li *ngFor="let error of serverErrorMessages">
               {{error}}
              </li>
            </ul>
-         </div>
-         <button [disabled] = 'submittingForm || resourceForm.invalid' type="submit" class="btn btn-primary btn-lg float-right mt-3">
-          Salvar
-         </button>
+         </div> -->
+         <app-server-error-messages
+         [server-error-messages] = "serverErrorMessages"
+         ></app-server-error-messages>
+         
       </div>
     </div>
   </div>
+  <button [disabled] = 'submittingForm || resourceForm.invalid' type="submit" class="btn btn-primary btn-lg float-right mt-3">
+    Salvar
+   </button>
 </form>
